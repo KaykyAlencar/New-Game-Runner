@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://d1qnkhs0aeye7"]
+
+[ext_resource type="PackedScene" uid="uid://bpcqjcg51rcsf" path="res://player.tscn" id="1_bnl05"]
+[ext_resource type="Texture2D" uid="uid://ddlgbcryjeosg" path="res://Models/Grass.png" id="1_y4g1d"]
+[ext_resource type="PackedScene" uid="uid://bb46xgcad0jed" path="res://door.tscn" id="3_pc2xy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yje8b"]
+size = Vector3(100, 2, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3vm0"]
+albedo_texture = ExtResource("1_y4g1d")
+
+[sub_resource type="BoxMesh" id="BoxMesh_goj55"]
+size = Vector3(100, 2, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j3awa"]
+size = Vector3(100, 4, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1d1ws"]
+albedo_texture = ExtResource("1_y4g1d")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ycu3t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0cjn"]
+albedo_texture = ExtResource("1_y4g1d")
+
+[node name="Main" type="Node"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("BoxShape3D_yje8b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+material_override = SubResource("StandardMaterial3D_c3vm0")
+mesh = SubResource("BoxMesh_goj55")
+
+[node name="Map Border" type="Node3D" parent="Ground"]
+
+[node name="Right_Cylinder" type="StaticBody3D" parent="Ground/Map Border"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Map Border/Right_Cylinder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+shape = SubResource("BoxShape3D_j3awa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Map Border/Right_Cylinder"]
+transform = Transform3D(-8.74228e-08, -50, 0, 2, -2.18557e-06, 0, 0, 0, 2, 0, -1, -5)
+material_override = SubResource("StandardMaterial3D_1d1ws")
+mesh = SubResource("CylinderMesh_ycu3t")
+skeleton = NodePath("../..")
+
+[node name="Left_Cylinder" type="StaticBody3D" parent="Ground/Map Border"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Map Border/Left_Cylinder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+shape = SubResource("BoxShape3D_j3awa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Map Border/Left_Cylinder"]
+transform = Transform3D(-8.74228e-08, -50, 0, 2, -2.18557e-06, 0, 0, 0, 2, 0, -1, 5)
+material_override = SubResource("StandardMaterial3D_b0cjn")
+mesh = SubResource("CylinderMesh_ycu3t")
+skeleton = NodePath("../..")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.446123, 0.389833, -0.805608, -0.228869, 0.919912, 0.318404, 0.865213, 0.0423312, 0.499614, -6.58743, 6.34391, 8.2478)
+
+[node name="Player" parent="." instance=ExtResource("1_bnl05")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera" type="Marker3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Camera"]
+transform = Transform3D(-4.37114e-08, 0.258819, -0.965926, 0, 0.965926, 0.258819, 1, 1.13133e-08, -4.2222e-08, -10, 4, 0)
+
+[node name="Door" parent="." instance=ExtResource("3_pc2xy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 2.5)
+
+[node name="Door2" parent="." instance=ExtResource("3_pc2xy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -2.5)
